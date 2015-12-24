@@ -1,0 +1,19 @@
+{
+  "name": "readme-app",
+  "version": "1.0.0",
+  "description": "MEAN stack",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noah-springwater/ReadMe-App.git"
+  },
+  "author": "Noah Springwater",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noah-springwater/ReadMe-App/issues"
+  },
+  "homepage": "https://github.com/noah-springwater/ReadMe-App#readme"
+}
