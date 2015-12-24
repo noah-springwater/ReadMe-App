@@ -49,6 +49,49 @@ function readMeAppCtrl ($http, $log) {
   function addToRead() {
     $http
       .post('/toRead', self.newBook)
+      .then(function (res) {
+        getToRead();
+      })
+      .catch(function (res) {
+        $log.error('failure', res);
+      });
+    self.newToRead = {};
+  }
+
+  function addAlreadyRead(read) {
+    $log.log("Working inside addAlreadyRead")
+    $http
+      .post('/alreadyRead', {alreadyRead: read})
+      .then(function (res) {
+        getAlreadyRead();
+      })
+      .catch(function (res) {
+        $log.error('failure', res);
+      });
+  }
+
+  function deleteToRead(book) {
+    $log.log(book);
+    $http
+      .delete('/toRead/' + book._id)
+      .then(function (res) {
+        getAlreadyRead();
+      })
+      .catch(function (res) {
+        $log.error('failure', res);
+      });
+  }
+
+  function deleteAlreadyRead(book) {
+    $log.log(book);
+    $http
+      .delete('/alreadyRead/' + book._id)
+      .then(function (res){
+        getAlreadyRead();
+      })
+      .catch(function (res) {
+        $log.error('failure', res);
+      });
   }
 
 }
