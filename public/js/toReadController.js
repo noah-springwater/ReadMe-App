@@ -5,7 +5,7 @@ app.controller('readMeAppCtrl', ['$http', '$log', readMeAppCtrl]);
 function readMeAppCtrl ($http, $log) {
   $log.log("Controller connected");
   var self = this;
-  self.heading = "ReadMe";
+  self.title = "ReadMe";
 
 
   self.allToRead;
@@ -22,13 +22,12 @@ function readMeAppCtrl ($http, $log) {
   self.deleteAlreadyRead = deleteAlreadyRead;
   getAlreadyRead();
 
-
   function getToRead() {
     //go to data service
     $http
       .get('/toRead')
       .then(function (res){
-        self.allRead = res.data;
+        self.allToRead = res.data;
       })
       .catch(function (res) {
         $log.error('failure', res)
@@ -48,8 +47,8 @@ function readMeAppCtrl ($http, $log) {
 
   function addToRead() {
     $http
-      .post('/toRead', self.newBook)
-      .then(function (res) {
+      .post('/toRead', self.newToRead)
+      .then(function (response) {
         getToRead();
       })
       .catch(function (res) {
@@ -61,8 +60,8 @@ function readMeAppCtrl ($http, $log) {
   function addAlreadyRead(read) {
     $log.log("Working inside addAlreadyRead")
     $http
-      .post('/alreadyRead', {alreadyRead: read})
-      .then(function (res) {
+      .post('/alreadyRead', {done: read})
+      .then(function (response) {
         getAlreadyRead();
       })
       .catch(function (res) {
@@ -74,8 +73,8 @@ function readMeAppCtrl ($http, $log) {
     $log.log(book);
     $http
       .delete('/toRead/' + book._id)
-      .then(function (res) {
-        getAlreadyRead();
+      .then(function (response) {
+        getToRead();
       })
       .catch(function (res) {
         $log.error('failure', res);
@@ -86,7 +85,7 @@ function readMeAppCtrl ($http, $log) {
     $log.log(book);
     $http
       .delete('/alreadyRead/' + book._id)
-      .then(function (res){
+      .then(function (response){
         getAlreadyRead();
       })
       .catch(function (res) {

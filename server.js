@@ -6,7 +6,7 @@ var AlreadyRead = require('./models/alreadyRead.js');
 var bodyParser = require('body-parser');
 var app = express();
 
-mongoose.connect('mongodb://localhost/readMeApp', function (err){
+mongoose.connect('mongodb://localhost/readMeApp', function (err) {
   if(err){
     console.log(err);
   } else {
@@ -37,54 +37,54 @@ app.get('/test', function (req, res) {
 
 //get toRead List
 app.get('/toRead', function(req, res){
-  ToRead.find().exec(function (err, toRead){
-    res.send(toRead);
+  ToRead.find().exec(function (err, bookTitle){
+    res.send(bookTitle);
   });
 });
 
 //get alreadyRead
 app.get('/alreadyRead', function(req, res){
-  AlreadyRead.find().exec(function (err, alreadyRead){
-    res.send(alreadyRead);
+  AlreadyRead.find().exec(function (err, finishedBook){
+    res.send(finishedBook);
   });
 });
 
 //post toRead
 app.post('/toRead', function (req, res){
-  var toBeRead = new ToRead(req.body);
-  toBeRead.save(function (err) {
+  var toRead = new ToRead(req.body);
+  toRead.save(function (err) {
     if (err) {
       console.log(err);
     } else {
       console.log('Book saved');
-      res.send(toBeRead);
+      res.send(toRead);
     }
   });
 });
 
 //post alreadyRead
 app.post('/alreadyRead', function (req, res) {
-  var alreadyRead = new AlreadyRead(req.body);
-  alreadyRead.save(function (err) {
+  var doneReading = new AlreadyRead(req.body);
+  doneReading.save(function (err) {
     if (err) {
       console.log(err);
     } else {
-      console.log('Completed Bood saved');
-      res.send(alreadyRead);
+      console.log('Completed Book saved');
+      res.send(doneReading);
     }
   });
 });
 
 //delete toRead
 app.delete('/toRead/:id', function (req, res) {
-  ToRead.remove({_id: req.params.id}).exec(function (err, toRead){
-    res.send(toRead);
+  ToRead.remove({_id: req.params.id}).exec(function (err, bookTitle){
+    res.send(bookTitle);
   });
 });
 
 //delete alreadyRead
 app.delete('/alreadyRead/:id', function (req, res) {
-  AlreadyRead.remove({_id: req.params.id}).exec(function (err, done) {
-    res.send(alreadyRead);
+  AlreadyRead.remove({_id: req.params.id}).exec(function (err, finishedBook) {
+    res.send(finishedBook);
   });
 });
